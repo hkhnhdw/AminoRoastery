@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cà Phê Hạt Pha Máy Cầu Đất</title>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid;
+            padding: 10px 0;
+            height: 70px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 80px;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu li a:hover {
+            color: #8D7B68;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-icons span {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #666;
+            margin-left: 80px;
+            margin-top: 35px;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #8e44ad;
+        }
+
+        .breadcrumb-icon {
+            font-size: 16px;
+        }
+
+        .breadcrumb-separator {
+            color: #999;
+        }
+
+        .breadcrumb .current {
+            color: #333;
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Product Section */
+        .product-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .product-image {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-info {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .product-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c1810;
+        }
+
+        .product-price {
+            font-size: 24px;
+            color: #8D7B68;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .product-options {
+            margin-bottom: 30px;
+        }
+
+        .option-group {
+            margin-bottom: 20px;
+        }
+
+        .option-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .weight-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .weight-option {
+            padding: 8px 20px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .weight-option.active {
+            border-color: black;
+            background-color: black;
+            color: white;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #2c1810;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #2c1810;
+            border: 2px solid #2c1810;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Product Description Section */
+        .description-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c1810;
+        }
+
+        .description-content {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .description-image {
+            width: 100%;
+            height: 300px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .description-image img {
+            height: 100%;
+            width: auto;
+        }
+
+        .product-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .spec-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .spec-value {
+            color: #666;
+        }
+
+        /* Related Products */
+        .related-section {
+            margin-bottom: 50px;
+        }
+
+        .related-products {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .related-item {
+            background-color: white;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .related-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .related-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .related-image img {
+            height: 100%;
+            width: auto;
+        }
+
+        .related-info {
+            padding: 20px;
+        }
+
+        .related-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .related-price {
+            font-size: 16px;
+            color: #d2691e;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .related-btn {
+            background: #fff;
+            border: 2px solid #333;
+            padding: 8px 40px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .related-btn:hover {
+            background-color: black;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: #fff;
+            padding: 60px 0 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons span {
+            width: 35px;
+            height: 35px;
+            background: #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .social-icons span:hover {
+            background: #8D7B68;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 20px;
+                font-size: 14px;
+            }
+            
+            .coffee-bags {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Dropdown Menu Styles */
+        .nav-menu li {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 2000;
+            padding: 15px 0;
+            margin-top: 10px;
+        }
+
+        .nav-menu li:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #fff;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            color: #8D7B68;
+            padding-left: 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="assets/images/logo-amino-ca-phe-rang-xay-vietnam.png" alt="">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="main.html">Trang chủ</a></li>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Danh mục 
+                    <i class="fi fi-rr-angle-down"></i>
+                </a>
+                <div class="dropdown">
+                    <a href="result_search.html?product=cafe-phin" class="dropdown-item">Cà phê phin</a>
+                    <a href="#" class="dropdown-item">Cà phê máy</a>
+                    <a href="#" class="dropdown-item">Gift Set: Set quà tặng</a>
+                </div>
+                </li>
+                <li><a href="#">Quy trình</a></li>
+                <li><a href="#">Tra cứu đơn hàng</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span>
+                    <i class="fi fi-rr-circle-user"></i>
+                </span>
+                <span>
+                    <i class="fi fi-rr-search"></i>
+                </span>
+                <span>
+                    <i class="fi fi-rr-shopping-cart"></i>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <span class="breadcrumb-icon"><i class="fi fi-rr-home"></i></span>
+            <span class="breadcrumb-separator"><i class="fi fi-rr-angle-small-right"></i></span>
+            <a href="#">Sản phẩm</a>
+            <span class="breadcrumb-separator"><i class="fi fi-rr-angle-small-right"></i></span>
+            <span class="current">Cà phê hạt pha máy cầu đất</span>
+        </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Product Section -->
+        <div class="product-section">
+            <div class="product-image">
+                <img src="assets/images/Ca-Phe-Hat-Pha-May-cau-dat-300x300.jpg" alt="">
+            </div>
+            
+            <div class="product-info">
+                <h1 class="product-title">Cà Phê Hạt Pha Máy Cầu Đất</h1>
+                <div class="product-price">200.000đ</div>
+                
+                <div class="product-description">
+                    Đậm đà bản sắc cao nguyên, “Cà phê hạt pha máy Cầu Đất” mang hương vị mộc mạc nhưng tinh tế từ vùng đất Cầu Đất – nơi những luống cà phê xanh mướt được nuôi dưỡng bởi nắng sương Đà Lạt. Hạt cà phê được rang thủ công theo phong vị Việt, giữ trọn vị đậm, hậu ngọt sâu – phù hợp với gu thưởng thức tinh tế và truyền thống của người Việt.
+                </div>
+
+                <div class="product-options">
+                    <div class="option-group">
+                        <label class="option-label">Khối lượng</label>
+                        <div class="weight-options">
+                            <div class="weight-option">250g</div>
+                            <div class="weight-option active">500g</div>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <label class="option-label">Số lượng</label>
+                        <div class="quantity-selector">
+                            <input type="number" class="quantity-input" value="1" min="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary">Thêm vào giỏ hàng</button>
+                    <button class="btn btn-secondary">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Description Section -->
+        <div class="description-section">
+            <h2 class="section-title">MÔ TẢ SẢN PHẨM</h2>
+            
+            <div class="description-content">
+                <p>Cà phê hạt pha máy Cầu Đất là loại cà phê hạt pha máy nổi tiếng chất lượng cao, phong phú về hương vị. Không phải ngẫu nhiên trong rất nhiều vùng miền sản xuất cà phê trên lãnh thổ Việt Nam nhưng cà phê Cầu Đất luôn được ưa chuộng. Điều kiện tự nhiên và thổ nhưỡng khí hậu là yếu tố hàng đầu tạo nên chất lượng của loại đồ uống đặc sản này. Khí hậu quanh năm không quá 30 độ C, nằm cao trên 1500m so với mực nước biển, là điều kiện lý tưởng trồng cà phê.</p>
+                
+                <p>Cà phê hạt pha máy Amino Cầu Đất chuyên dụng pha cà phê máy được trồng và phát triển hữu cơ tại các trang trại hợp sản xuất cà phê sạch của Amino. Sau thu hoạch, chế biến bằng công nghệ tiên tiến nhất hiện nay nhằm giữ lại nhiều yếu tố tự nhiên nhất của hạt cà phê.</p>
+            </div>
+
+            <div class="description-image">
+                <img src="assets/images/Ca-Phe-Hat-Pha-May-cau-dat.jpg" alt="">
+            </div>
+
+            <div class="product-specs">
+                <div class="spec-item">
+                    <span class="spec-label">Tên sản phẩm</span>
+                    <span class="spec-value">Cà phê hạt pha máy cầu đất</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Xuất sứ</span>
+                    <span class="spec-value">Trọng Tín Farm</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Giống</span>
+                    <span class="spec-value">Arabica</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Độ cao vùng trồng</span>
+                    <span class="spec-value">1500m</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Sơ chế</span>
+                    <span class="spec-value">Wash, phơi trong nhà kính</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Cỡ hạt</span>
+                    <span class="spec-value">Trên sàng 16</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Độ rang</span>
+                    <span class="spec-value">Medium</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Đặc tính</span>
+                    <span class="spec-value">Chua cao, thể chất dầy, hương chanh, black tea, hạnh nhân</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Phù hợp</span>
+                    <span class="spec-value">Pha máy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="related-section">
+            <h2 class="section-title">DÀNH RIÊNG CHO BẠN</h2>
+            
+            <div class="related-products">
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="assets/images/Ca-phe-Bot-Pha-Phin-Amino-Signature-300x300.jpg" alt="">
+                    </div>
+                    <div class="related-info">
+                        <div class="related-title">Cà phê hạt pha máy cau đất</div>
+                        <div class="related-price">200.000đ</div>
+                        <button class="related-btn">Thêm vào giỏ</button>
+                    </div>
+                </div>
+
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="assets/images/ca-phe-bot-pha-phin-honey-gia-lai-e1562694073172-300x300.jpg" alt="">
+                    </div>
+                    <div class="related-info">
+                        <div class="related-title">Cà phê hạt pha máy cau đất</div>
+                        <div class="related-price">200.000đ</div>
+                        <button class="related-btn">Thêm vào giỏ</button>
+                    </div>
+                </div>
+
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="assets/images/Ca-Phe-Hat-Pha-May-Balance-Blend-300x300.jpg" alt="">
+                    </div>
+                    <div class="related-info">
+                        <div class="related-title">Cà phê hạt pha máy cau đất</div>
+                        <div class="related-price">200.000đ</div>
+                        <button class="related-btn">Thêm vào giỏ</button>
+                    </div>
+                </div>
+
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="assets/images/Ca-Phe-Hat-Pha-May-dien-Bien-300x300.jpg" alt="">
+                    </div>
+                    <div class="related-info">
+                        <div class="related-title">Cà phê hạt pha máy cau đất</div>
+                        <div class="related-price">200.000đ</div>
+                        <button class="related-btn">Thêm vào giỏ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AMINO ROASTERY</h3>
+                <p>Địa chỉ: Số 39, ngõ 237 đường Phú Viên, Phường Bồ Đề, Quận Long Biên Hà Nội</p>
+                <p>SĐT: 024.6555.3177 / 096.797.6477</p>
+                <p>Email: hello@amino.vn</p>
+                <div class="social-icons">
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/facebook-new.png" alt="facebook-new"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/instagram-new--v1.png" alt="instagram-new--v1"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/tiktok--v1.png" alt="tiktok--v1"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/youtube-play--v1.png" alt="youtube-play--v1"/></span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>DỊCH VỤ KHÁCH HÀNG</h3>
+                <ul>
+                    <li>Chính sách đổi trả</li>
+                    <li>Hướng dẫn thanh toán</li>
+                    <li>Chính sách bảo mật</li>
+                    <li>Điều khoản sử dụng</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>GIỜ LÀM VIỆC</h3>
+                <ul>
+                    <li>Thứ 2 - Thứ 6: 8:00 - 22:00</li>
+                    <li>Thứ 7 - Chủ nhật: 7:00 - 23:00</li>
+                    <li>Hỗ trợ online 24/7</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

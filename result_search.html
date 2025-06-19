@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cà phê phin - Amino Coffee</title>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid;
+            padding: 10px 0;
+            height: 70px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 80px;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu li a:hover {
+            color: #8D7B68;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-icons span {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Dropdown Menu Styles */
+        .nav-menu li {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 2000;
+            padding: 15px 0;
+            margin-top: 10px;
+        }
+
+        .nav-menu li:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #fff;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            color: #8D7B68;
+            padding-left: 25px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #8e44ad;
+        }
+
+        .breadcrumb-icon {
+            font-size: 16px;
+        }
+
+        .breadcrumb-separator {
+            color: #999;
+        }
+
+        .breadcrumb .current {
+            color: #333;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .breadcrumb .current:after {
+            content: '12';
+            position: absolute;
+            top: -2px;
+            right: -8px;
+            width: 6px;
+            height: 6px;
+            background: black;
+            border: 1px solid black;
+            border-radius: 50%;
+            font-size: 5px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Content Layout */
+        .content-layout {
+            display: flex;
+            gap: 30px;
+        }
+
+        /* Sidebar Filter */
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .filter-section {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .filter-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .filter-toggle {
+            font-size: 14px;
+            color: #666;
+            transition: transform 0.3s;
+        }
+
+        .filter-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .filter-content.active {
+            max-height: 180px; 
+            padding: 20px;
+        }
+
+        .filter-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ddd;
+            border-radius: 3px;
+            appearance: none;
+            cursor: pointer;
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .filter-option input[type="checkbox"]:checked {
+            background: black;
+            border-color: black;
+        }
+
+        .filter-option input[type="checkbox"]:checked:after {
+            content: '✓';
+            color: #fff;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .filter-option label {
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .clear-filter {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .clear-filter:hover {
+            background: #c7c8c8;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+
+        /* Sort Options */
+        .sort-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .sort-dropdown {
+            position: relative;
+        }
+
+        .sort-select {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px 40px 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            min-width: 200px;
+            appearance: none;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: #8e44ad;
+        }
+
+        .sort-dropdown:after {
+            content: '▼';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #666;
+            pointer-events: none;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image img {
+            width: auto;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-bag {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 120px;
+            background: #fff;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .bag-orange { border-top: 4px solid #f39c12; }
+        .bag-red { border-top: 4px solid #e74c3c; }
+        .bag-green { border-top: 4px solid #27ae60; }
+        .bag-blue { border-top: 4px solid #3498db; }
+
+        .bag-logo {
+            width: 30px;
+            height: 30px;
+            background: #333;
+            margin-bottom: 8px;
+            border-radius: 3px;
+        }
+
+        .bag-text {
+            font-size: 10px;
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8spx;
+            line-height: 1.4;
+            height: 40px;
+            display: flex;
+            text-align: left;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8D7B68;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .add-to-cart {
+            background: #fff;
+            border: 2px solid #333;
+            padding: 8px 40px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: #fff;
+            padding: 60px 0 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons span {
+            width: 35px;
+            height: 35px;
+            background: #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .social-icons span:hover {
+            background: #8D7B68;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 20px;
+                font-size: 14px;
+            }
+            
+            .coffee-bags {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="assets/images/logo-amino-ca-phe-rang-xay-vietnam.png" alt="">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="main.html">Trang chủ</a></li>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Danh mục 
+                    <i class="fi fi-rr-angle-down"></i>
+                </a>
+                <div class="dropdown">
+                    <a href="result_search.html?product=cafe-phin" class="dropdown-item">Cà phê phin</a>
+                    <a href="#" class="dropdown-item">Cà phê máy</a>
+                    <a href="#" class="dropdown-item">Gift Set: Set quà tặng</a>
+                </div>
+                </li>
+                <li><a href="#">Quy trình</a></li>
+                <li><a href="#">Tra cứu đơn hàng</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span>
+                    <i class="fi fi-rr-circle-user"></i>
+                </span>
+                <span>
+                    <i class="fi fi-rr-search"></i>
+                </span>
+                <span>
+                    <i class="fi fi-rr-shopping-cart"></i>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <span class="breadcrumb-icon"><i class="fi fi-rr-home"></i></span>
+            <span class="breadcrumb-separator"><i class="fi fi-rr-angle-small-right"></i></span>
+            <a href="#">Kết quả tìm kiếm</a>
+            <span class="breadcrumb-separator"><i class="fi fi-rr-angle-small-right"></i></span>
+            <span class="current">Cà phê phin</span>
+        </nav>
+
+        <div class="content-layout">
+            <!-- Sidebar Filter -->
+            <aside class="sidebar">
+                <div class="filter-section">
+                    <div class="filter-header" onclick="toggleFilter('coffeeTypeContent')">
+                        <h3 class="filter-title">Loại cà phê</h3>
+                        <span class="filter-toggle" id="coffeeTypeToggle"><i class="fi fi-rr-angle-down"></i></span>
+                    </div>
+                    <div class="filter-content" id="coffeeTypeContent">
+                        <div class="filter-option">
+                            <input type="checkbox" id="phin" name="coffeeType" value="phin">
+                            <label for="phin">Cà phê phin truyền thống</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="arabica" name="coffeeType" value="arabica">
+                            <label for="arabica">Cà phê Arabica</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="nguyenChat" name="coffeeType" value="nguyenChat">
+                            <label for="nguyenChat">Cà phê hạt nguyên chất</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="hoatan" name="coffeeType" value="hoatan">
+                            <label for="hoatan">Cà phê hòa tan</label>
+                        </div>
+                        <button class="clear-filter" onclick="clearFilters()">Xóa bộ lọc</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Sort Options -->
+                <div class="sort-section">
+                    <div class="sort-dropdown">
+                        <select class="sort-select">
+                            <option>Xếp theo: Liên quan</option>
+                            <option>Bán chạy nhất</option>
+                            <option>Giảm dần</option>
+                            <option>Tăng dần</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid">
+                    <!-- Row 1 -->
+                    <div class="product-card" onclick="goToDetail()">
+                        <div class="product-image">
+                            <img src="assets/images/Ca-Phe-Hat-Pha-May-cau-dat-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt phin máy cầu đất</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="assets/images/Ca-Phe-Hat-Pha-May-Lac-Duong-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt phin pha máy lạc dương</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="assets/images/Ca-Phe-Hat-Pha-May-dien-Bien-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt phin pha máy Đăk Lắk</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="assets/images/Ca-phe-Bot-Pha-Phin-Amino-Signature-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt phin máy cầu đá</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="assets/images/ca-phe-bot-pha-phin-honey-gia-lai-e1562694073172-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt phin máy lọc dương</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="assets/images/ca-phe-bot-pha-phin-honey-bao-loc-e1562747677231-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt phin máy Đăk lăm</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="assets/images/Ca-Phe-Bot-Pha-Phin-Tradition-2-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt phin máy Robusta Blend</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="assets/images/Ca-Phe-Hat-Pha-May-dien-Bien-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt phin máy Arvico Signature</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="assets/images/Ca-Phe-Bot-Pha-Phin-Tradition-2-300x300.jpg" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">Cà phê hạt máy Lungo Gia lai</div>
+                            <div class="product-price">200.000đ</div>
+                            <button class="add-to-cart">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AMINO ROASTERY</h3>
+                <p>Địa chỉ: Số 39, ngõ 237 đường Phú Viên, Phường Bồ Đề, Quận Long Biên Hà Nội</p>
+                <p>SĐT: 024.6555.3177 / 096.797.6477</p>
+                <p>Email: hello@amino.vn</p>
+                <div class="social-icons">
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/facebook-new.png" alt="facebook-new"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/instagram-new--v1.png" alt="instagram-new--v1"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/tiktok--v1.png" alt="tiktok--v1"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/youtube-play--v1.png" alt="youtube-play--v1"/></span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>DỊCH VỤ KHÁCH HÀNG</h3>
+                <ul>
+                    <li>Chính sách đổi trả</li>
+                    <li>Hướng dẫn thanh toán</li>
+                    <li>Chính sách bảo mật</li>
+                    <li>Điều khoản sử dụng</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>GIỜ LÀM VIỆC</h3>
+                <ul>
+                    <li>Thứ 2 - Thứ 6: 8:00 - 22:00</li>
+                    <li>Thứ 7 - Chủ nhật: 7:00 - 23:00</li>
+                    <li>Hỗ trợ online 24/7</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function goToDetail() {
+            window.location.href = `detail_product.html`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('click', goToDetail);
+            });
+        });
+
+        function toggleFilter(contentId) {
+        const content = document.getElementById(contentId);
+        const toggle = document.getElementById(contentId.replace('Content', 'Toggle'));
+        content.classList.toggle('active');
+        toggle.innerHTML = content.classList.contains('active') ? '<i class="fi fi-rr-angle-up"></i>' : '<i class="fi fi-rr-angle-down"></i>';
+        }
+
+        function clearFilters() {
+            const checkboxes = document.querySelectorAll('input[name="coffeeType"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            // Kích hoạt lại "Xem tất cả" khi xóa bộ lọc
+            document.getElementById('all').checked = true;
+            // Ẩn dropdown sau khi reset (tùy chọn)
+            document.getElementById('coffeeTypeContent').classList.remove('active');
+            document.getElementById('coffeeTypeToggle').innerHTML = '<i class="fi fi-rr-angle-down"></i>';
+        }
+    </script>
+</body>
+</html>

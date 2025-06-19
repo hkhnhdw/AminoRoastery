@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amino Coffee</title>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid;
+            padding: 10px 0;
+            height: 70px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 80px;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu li a:hover {
+            color: #8D7B68;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-icons span {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Banner Slider */
+        .banner-slider {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .banner-slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .banner-slide.active {
+            opacity: 1;
+        }
+
+        .banner-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .banner-content img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Featured Products Section */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .product-section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-subtitle {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .view-all {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .view-all:after {
+            content: '>>';
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            position: relative;
+        }
+
+        .product-card {
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image img {
+            width: auto;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-bag {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 120px;
+            background: #fff;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8D7B68;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .add-to-cart {
+            background: #fff;
+            border: 2px solid #333;
+            padding: 8px 40px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        .slider-nav {
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            border: 2px solid #ddd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .slider-nav:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        /* Why Choose Section */
+        .why-choose {
+            background: #f8f9fa;
+            padding: 50px 0;
+        }
+
+        .why-choose-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .why-choose-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 60px;
+        }
+
+        .why-choose-title span {
+            color: #8D7B68;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: #27ae60;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #fff;
+        }
+
+        .feature-icon.orange {
+            background: #f39c12;
+        }
+
+        .feature-icon.red {
+            background: #e74c3c;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Coffee Knowledge Section */
+        .coffee-knowledge {
+            margin: 80px 0;
+        }
+
+        .knowledge-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .knowledge-card {
+            background: #fff;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .knowledge-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            overflow: hidden;
+        }
+
+        .knowledge-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .knowledge-content {
+            padding: 25px;
+        }
+
+        .knowledge-card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .knowledge-desc {
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: #fff;
+            padding: 60px 0 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons span {
+            width: 35px;
+            height: 35px;
+            background: #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .social-icons span:hover {
+            background: #8D7B68;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 20px;
+                font-size: 14px;
+            }
+            
+            .coffee-bags {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        /* Search Popup Styles */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .search-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .search-popup {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 20px rgba(0, 0, 0, 0.15);
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-overlay.active .search-popup {
+            right: 0;
+        }
+
+        .search-header {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .close-search {
+            background: none;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-search img {
+            width: 20px;
+            height: 20px;
+        } 
+
+        .search-input-section {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .search-input-container {
+            position: relative;
+            display: flex;
+            min-width: 0;
+            flex: 1;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .search-icon {
+            padding: 0 15px;
+            color: #999;
+            font-size: 16px;
+        }
+
+        .search-input {
+            flex: 1;
+            width: 100px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            padding: 12px 0;
+            background: transparent;
+            color: #333;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .btn-cancel {
+            color: #000000;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            padding: 12px 15px; 
+            border: none;
+            background: none;
+            border-left: 1px solid #e0e0e0; 
+        }
+
+        .search-submit {
+            background: none;
+            border: none;
+            padding: 12px 15px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .search-submit:hover {
+            color: #333;
+        }
+
+        .search-suggestions {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .suggestion-category {
+            margin-bottom: 25px;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background: #f8f9fa;
+            margin: 0 -10px;
+            padding: 12px 10px;
+        }
+
+        .suggestion-icon {
+            margin-right: 15px;
+            color: #999;
+            font-size: 14px;
+            width: 16px;
+        }
+
+        .product-image-small {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .product-image-small img {
+            height: 100%;
+            width: auto;
+        }
+
+        .suggestion-text {
+            color: #333;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .search-results {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-results.show {
+            display: block;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .result-item:hover {
+            background: #f8f9fa;
+            margin: 0 -20px;
+            padding: 12px 20px;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-image {
+            width: 50px;
+            height: 50px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+
+        .result-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-name {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .result-price {
+            font-size: 13px;
+            color: #8D7B68;
+            font-weight: 600;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .search-footer {
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        .search-footer.show {
+            display: block;
+        }
+
+        .view-all-results {
+            width: 100%;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 1px solid black;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .view-all-results:hover {
+            background: #e9ecef;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 20px;
+                font-size: 14px;
+            }
+            
+            .coffee-bags {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .search-popup {
+                width: 300px;
+                right: -300px;
+            }
+        }
+
+        .nav-menu li a:hover {
+            color: #8D7B68;
+        }
+
+        /* Dropdown Menu Styles */
+        .nav-menu li {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 2000;
+            padding: 15px 0;
+            margin-top: 10px;
+        }
+
+        .nav-menu li:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #fff;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            color: #8D7B68;
+            padding-left: 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <img src="assets/images/logo-amino-ca-phe-rang-xay-vietnam.png" alt="">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Danh mục 
+                    <i class="fi fi-rr-angle-down"></i>
+                </a>
+                <div class="dropdown">
+                    <a href="result_search.html?product=cafe-phin" class="dropdown-item">Cà phê phin</a>
+                    <a href="#" class="dropdown-item">Cà phê máy</a>
+                    <a href="#" class="dropdown-item">Gift Set: Set quà tặng</a>
+                </div>
+                </li>
+                <li><a href="#">Quy trình</a></li>
+                <li><a href="#">Tra cứu đơn hàng</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span>
+                    <i class="fi fi-rr-circle-user"></i>
+                </span>
+                <span>
+                    <i class="fi fi-rr-search"></i>
+                </span>
+                <span>
+                    <i class="fi fi-rr-shopping-cart"></i>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Popup -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-popup">
+            <div class="search-header">
+                <button class="close-search" id="closeSearch">
+                    <img src="assets/icon/cross.svg" alt="">
+                </button>
+            </div>
+            
+            <div class="search-input-section">
+                <div class="search-input-container">
+                    <span class="search-icon">
+                        <i class="fi fi-rr-search"></i>
+                    </span>
+                    <input type="text" class="search-input" placeholder="Tìm kiếm sản phẩm..." id="searchInput">
+                    <span class="btn-cancel" id="btnCancel">Đóng</span>
+                </div>
+            </div>
+
+            <div class="search-suggestions" id="searchSuggestions">
+                <div class="suggestion-category">
+                    <div class="suggestion-item">
+                        <span class="suggestion-icon">
+                            <i class="fi fi-rr-search"></i>
+                        </span>
+                        <span class="suggestion-text">Cà phê phin</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <span class="suggestion-icon">
+                            <i class="fi fi-rr-search"></i>
+                        </span>
+                        <span class="suggestion-text">Cà phê phin Amino</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <span class="suggestion-icon">
+                            <i class="fi fi-rr-search"></i>
+                        </span>
+                        <span class="suggestion-text">Cà phê bột pha phin</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <span class="suggestion-icon">
+                            <i class="fi fi-rr-search"></i>
+                        </span>
+                        <span class="suggestion-text">Cà phê Honey Gia Lai</span>
+                    </div>
+                </div>
+
+                <div class="suggestion-category">
+                    <div class="suggestion-item" onclick="goToDetail()">
+                        <div class="product-image-small">
+                            <img src="assets/images/Ca-Phe-Hat-Pha-May-cau-dat-300x300.jpg" alt="">
+                        </div>
+                        <span class="suggestion-text">Cà phê hạt pha máy cầu đất</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <div class="product-image-small">
+                            <img src="assets/images/Ca-Phe-Hat-Pha-May-Lac-Duong-300x300.jpg" alt="">
+                        </div>
+                        <span class="suggestion-text">Cà phê hạt pha máy lạc dương</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-results" id="searchResults">
+                <div class="result-item" data-id="1" onclick="goToDetail()">
+                    <div class="result-image">
+                        <img src="assets/images/Ca-Phe-Hat-Pha-May-cau-dat-300x300.jpg" alt="">
+                    </div>
+                    <div class="result-info">
+                        <div class="result-name">Cà phê hạt pha máy cầu đất</div>
+                        <div class="result-price">200.000đ</div>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <div class="result-image">
+                        <img src="assets/images/Ca-Phe-Hat-Pha-May-Lac-Duong-300x300.jpg" alt="">
+                    </div>
+                    <div class="result-info">
+                        <div class="result-name">Cà phê hạt pha máy lạc dương</div>
+                        <div class="result-price">200.000đ</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-icon">
+                    <i class="fi fi-rr-search"></i>
+                </div>
+                <p>Không tìm thấy sản phẩm nào</p>
+            </div>
+
+            <div class="search-footer" id="searchFooter">
+                <button class="view-all-results">Hiển thị toàn bộ kết quả</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Slider -->
+    <section class="banner-slider">
+    <div class="slider-container">
+        <div class="banner-slide active">
+            <div class="banner-content">
+                <img src="assets/images/img_5d5bbc5b68b4d.jpg" alt="">
+            </div>
+        </div>
+        <div class="banner-slide">
+            <div class="banner-content">
+                <img src="assets/images/img_5d5bbc628e3f7.jpg" alt="">
+            </div>
+        </div>
+        <div class="banner-slide">
+            <div class="banner-content">
+                <img src="assets/images/img_5d5bbd31b93f9.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+    <main class="main-content">
+        <!-- Featured Products Title -->
+        <h1 class="section-title">Sản phẩm nổi bật</h1>
+
+        <!-- Coffee Machine Section -->
+        <section class="product-section">
+            <div class="section-header">
+                <h2 class="section-subtitle">CÀ PHÊ MÁY TẠI AMINO</h2>
+                <a href="#" class="view-all">Xem tất cả</a>
+            </div>
+            <div class="products-grid">
+                <div class="product-card" data-id="1" onclick="goToDetail()">
+                    <div class="product-image">
+                        <img src="assets/images/Ca-Phe-Hat-Pha-May-cau-dat-300x300.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cà phê hạt pha máy cầu đất</div>
+                        <div class="product-price">200.000đ</div>
+                        <button class="add-to-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/images/Ca-Phe-Hat-Pha-May-Lac-Duong-300x300.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cà phê hạt pha máy lạc dương</div>
+                        <div class="product-price">200.000đ</div>
+                        <button class="add-to-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/images/Ca-Phe-Hat-Pha-May-dien-Bien-300x300.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cà phế hạt pha máy Điện Biên</div>
+                        <div class="product-price">200.000đ</div>
+                        <button class="add-to-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/images/Ca-Phe-Hat-Pha-May-Balance-Blend-300x300.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cà phê hạt pha máy Balance Blend</div>
+                        <div class="product-price">200.000đ</div>
+                        <button class="add-to-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <i class="fi fi-rr-angle-right"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Coffee Section -->
+        <section class="product-section">
+            <div class="section-header">
+                <h2 class="section-subtitle">CÀ PHÊ PHIN TẠI AMINO</h2>
+                <a href="#" class="view-all" onclick="goToSearch()">Xem tất cả</a>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/images/Ca-phe-Bot-Pha-Phin-Amino-Signature-300x300.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cà phê bột pha phin AMINO Signature</div>
+                        <div class="product-price">200.000đ</div>
+                        <button class="add-to-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/images/ca-phe-bot-pha-phin-honey-bao-loc-e1562747677231-300x300.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cà phê bột pha phin Honey Bảo Lộc</div>
+                        <div class="product-price">200.000đ</div>
+                        <button class="add-to-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/images/ca-phe-bot-pha-phin-honey-gia-lai-e1562694073172-300x300.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cà phê bột pha phin Honey Gia Lai</div>
+                        <div class="product-price">200.000đ</div>
+                        <button class="add-to-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/images/Ca-Phe-Bot-Pha-Phin-Tradition-2-300x300.jpg" alt="">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cà phê bột pha phin Tradition 2</div>
+                        <div class="product-price">200.000đ</div>
+                        <button class="add-to-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <i class="fi fi-rr-angle-right"></i>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Why Choose Section -->
+    <section class="why-choose">
+        <div class="why-choose-content">
+            <h2 class="why-choose-title">Tại sao chọn <span>AMINO COFFEE?</span></h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🌱</div>
+                    <h3 class="feature-title">100% Tự Nhiên</h3>
+                    <p class="feature-desc">Hạt cà phê được tuyển chọn kỹ lưỡng từ những vùng trồng cà phê nổi tiếng, không chất bảo quản.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon orange">☕</div>
+                    <h3 class="feature-title">Rang tươi hàng ngày</h3>
+                    <p class="feature-desc">Cà phê được rang tươi mỗi ngày để đảm bảo hương vị và chất lượng tốt nhất đến tay khách hàng.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon red">🏍️</div>
+                    <h3 class="feature-title">Giao hàng nhanh chóng</h3>
+                    <p class="feature-desc">Miễn phí giao hàng toàn quốc, đảm bảo sản phẩm đến tay bạn trong thời gian ngắn nhất.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="main-content">
+        <!-- Coffee Knowledge Section -->
+        <section class="coffee-knowledge">
+            <h2 class="knowledge-title">Kiến thức về cà phê rang xay</h2>
+            <div class="knowledge-grid">
+                <div class="knowledge-card">
+                    <div class="knowledge-image">
+                        <img src="assets/images/Ca-phe-Arabica-va-Robusta-loai-nao-ngon-hon.jpg" alt="">
+                    </div>
+                    <div class="knowledge-content">
+                        <h3 class="knowledge-card-title">Cà phê Arabica và Robusta, loại nào ngon hơn?</h3>
+                        <p class="knowledge-desc">Cà phê Arabica và Robusta là những giống cà phê phổ biến nhất trên thế giới, có hương vị hoàn toàn khác nhau...</p>
+                    </div>
+                </div>
+                <div class="knowledge-card">
+                    <div class="knowledge-image">
+                        <img src="assets/images/ca-phe-nguyen-chat-la-gi.jpg" alt="">
+                    </div>
+                    <div class="knowledge-content">
+                        <h3 class="knowledge-card-title">10 tiêu chí phân biệt cà phê nguyên chất và cà phê pha</h3>
+                        <p class="knowledge-desc">10 cách để phân biệt cà phê sạch từ cà phê giả gồm từ màu sắc, mùi vị đến cách pha chế...</p>
+                    </div>
+                </div>
+                <div class="knowledge-card">
+                    <div class="knowledge-image">
+                        <img src="assets/images/ca-phe-rang-xay-la-gi.jpg" alt="">
+                    </div>
+                    <div class="knowledge-content">
+                        <h3 class="knowledge-card-title">Cà phê rang xay tốt 3 tiêu chí nhận biết cà phê rang xay nguyên chất</h3>
+                        <p class="knowledge-desc">Cà phê rang xay là hình thức được nhiều người lựa chọn, tuy nhiên không phải ai cũng...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AMINO ROASTERY</h3>
+                <p>Địa chỉ: Số 39, ngõ 237 đường Phú Viên, Phường Bồ Đề, Quận Long Biên Hà Nội</p>
+                <p>SĐT: 024.6555.3177 / 096.797.6477</p>
+                <p>Email: hello@amino.vn</p>
+                <div class="social-icons">
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/facebook-new.png" alt="facebook-new"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/instagram-new--v1.png" alt="instagram-new--v1"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/tiktok--v1.png" alt="tiktok--v1"/></span>
+                    <span><img width="30" height="30" src="https://img.icons8.com/ios/50/youtube-play--v1.png" alt="youtube-play--v1"/></span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>DỊCH VỤ KHÁCH HÀNG</h3>
+                <ul>
+                    <li>Chính sách đổi trả</li>
+                    <li>Hướng dẫn thanh toán</li>
+                    <li>Chính sách bảo mật</li>
+                    <li>Điều khoản sử dụng</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>GIỜ LÀM VIỆC</h3>
+                <ul>
+                    <li>Thứ 2 - Thứ 6: 8:00 - 22:00</li>
+                    <li>Thứ 7 - Chủ nhật: 7:00 - 23:00</li>
+                    <li>Hỗ trợ online 24/7</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function goToDetail() {
+            window.location.href = `detail_product.html`;
+        }
+
+        function goToSearch() {
+            window.location.href = 'result_search.html';
+        }
+
+        // Banner slider functionality
+        let currentSlideIndex = 0;
+        let slideInterval;
+        const slides = document.querySelectorAll('.banner-slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                const img = slide.querySelector('img');
+                if (img && !img.complete) {
+                    img.onerror = () => {
+                        slide.style.display = 'none'; 
+                    };
+                }
+                slide.classList.remove('active');
+            });
+            if (index >= totalSlides) index = 0;
+            if (index < 0) index = totalSlides - 1;
+            currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        function startAutoPlay() {
+            slideInterval = setInterval(nextSlide, 3000); 
+        }
+
+        function stopAutoPlay() {
+            clearInterval(slideInterval);
+        }
+
+        function initSlider() {
+            showSlide(0); 
+            startAutoPlay(); 
+            
+            const sliderContainer = document.querySelector('.banner-slider');
+            sliderContainer.addEventListener('mouseenter', stopAutoPlay);
+            sliderContainer.addEventListener('mouseleave', startAutoPlay);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+        // Get elements
+        const searchIcon = document.querySelector('.nav-icons .fi-rr-search').parentElement;
+        const searchOverlay = document.getElementById('searchOverlay');
+        const closeSearch = document.getElementById('closeSearch');
+        const searchInput = document.getElementById('searchInput');
+        const searchSubmit = document.querySelector('.search-submit');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        const searchResults = document.getElementById('searchResults');
+        const noResults = document.getElementById('noResults');
+        const searchFooter = document.getElementById('searchFooter');
+        const btnCancel = document.getElementById('btnCancel')
+        // Sample data for search
+        const products = [
+            {
+                id: 1,
+                name: 'Cà phê hạt pha máy cầu đất',
+                price: '200.000đ',
+                image: 'assets/images/Ca-Phe-Hat-Pha-May-cau-dat-300x300.jpg'
+            },
+            {
+                id: 2,
+                name: 'Cà phê hạt pha máy lạc dương',
+                price: '200.000đ',
+                image: 'assets/images/Ca-Phe-Hat-Pha-May-Lac-Duong-300x300.jpg'
+            },
+            {
+                id: 3,
+                name: 'Cà phê hạt pha máy Điện Biên',
+                price: '200.000đ',
+                image: 'assets/images/Ca-Phe-Hat-Pha-May-dien-Bien-300x300.jpg'
+            },
+            {
+                id: 4,
+                name: 'Cà phê hạt pha máy Balance Blend',
+                price: '200.000đ',
+                image: 'assets/images/Ca-Phe-Hat-Pha-May-Balance-Blend-300x300.jpg'
+            },
+            {
+                id: 5,
+                name: 'Cà phê bột pha phin AMINO Signature',
+                price: '200.000đ',
+                image: 'assets/images/Ca-phe-Bot-Pha-Phin-Amino-Signature-300x300.jpg'
+            },
+            {
+                id: 6,
+                name: 'Cà phê bột pha phin Honey Bảo Lộc',
+                price: '200.000đ',
+                image: 'assets/images/ca-phe-bot-pha-phin-honey-bao-loc-e1562747677231-300x300.jpg'
+            },
+            {
+                id: 7,
+                name: 'Cà phê bột pha phin Honey Gia Lai',
+                price: '200.000đ',
+                image: 'assets/images/ca-phe-bot-pha-phin-honey-gia-lai-e1562694073172-300x300.jpg'
+            },
+            {
+                id: 8,
+                name: 'Cà phê bột pha phin Tradition 2',
+                price: '200.000đ',
+                image: 'assets/images/Ca-Phe-Bot-Pha-Phin-Tradition-2-300x300.jpg'
+            }
+        ];
+
+        // Initialize slider
+        initSlider();
+
+        // Open search popup
+        searchIcon.addEventListener('click', function() {
+            searchOverlay.classList.add('active');
+            searchInput.focus();
+
+            const viewAllResults = document.querySelector('.view-all-results');
+            if (viewAllResults) {
+                viewAllResults.addEventListener('click', goToSearch);
+            }
+        });
+
+        // Close search popup
+        closeSearch.addEventListener('click', function() {
+            searchOverlay.classList.remove('active');
+            resetSearch();
+        });
+
+        // Close when clicking overlay
+        searchOverlay.addEventListener('click', function(e) {
+            if (e.target === searchOverlay) {
+                searchOverlay.classList.remove('active');
+                resetSearch();
+            }
+        });
+
+        // Close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+                searchOverlay.classList.remove('active');
+                resetSearch();
+            }
+        });
+
+        document.getElementById('btnCancel').addEventListener('click', function() {
+            searchOverlay.classList.remove('active');
+            resetSearch();
+        });
+
+        // Handle search input
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim().toLowerCase();
+            
+            if (query.length === 0) {
+                showSuggestions();
+                return;
+            }
+
+            if (query.length >= 2) {
+                performSearch(query);
+            }
+        });
+
+        // Handle search submit
+        searchSubmit.addEventListener('click', function() {
+            const query = searchInput.value.trim();
+            if (query) {
+                performSearch(query);
+            }
+        });
+
+        // Handle Enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    performSearch(query);
+                }
+            }
+        });
+
+        // Handle suggestion clicks
+        searchSuggestions.addEventListener('click', function(e) {
+            const suggestionItem = e.target.closest('.suggestion-item');
+            if (suggestionItem) {
+                const text = suggestionItem.querySelector('.suggestion-text').textContent;
+                searchInput.value = text;
+                performSearch(text.toLowerCase());
+            }
+        });
+
+        // Perform search
+        function performSearch(query) {
+            const suggestions = [
+                'Cà phê phin',
+                'Cà phê phin Amino', 
+                'Cà phê bột pha phin',
+                'Cà phê Honey Gia Lai',
+                'Cà phê máy',
+                'Cà phê hạt pha máy'
+            ].filter(suggestion => 
+                suggestion.toLowerCase().includes(query)
+            );
+
+            const productResults = products.filter(product => 
+                product.name.toLowerCase().includes(query)
+            );
+
+            displayMixedResults(suggestions, productResults, query);
+        }
+
+        function displayMixedResults(suggestions, productResults, query) {
+            searchSuggestions.style.display = 'none';
+            
+            if (suggestions.length === 0 && productResults.length === 0) {
+                searchResults.style.display = 'none';
+                noResults.style.display = 'block';
+                searchFooter.classList.remove('show');
+                return;
+            }
+
+            noResults.style.display = 'none';
+            searchResults.style.display = 'block';
+            searchFooter.classList.add('show');
+
+            
+            searchResults.innerHTML = '';
+
+           
+            if (suggestions.length > 0) {
+                const suggestionHeader = document.createElement('div');
+                suggestionHeader.innerHTML = '<h4 style="color: #666; font-size: 12px; text-transform: uppercase; margin: 15px 0 10px 0; padding: 0;">Gợi ý tìm kiếm</h4>';
+                searchResults.appendChild(suggestionHeader);
+
+                suggestions.forEach(suggestion => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.className = 'result-item';
+                    suggestionItem.innerHTML = `
+                        <div class="result-image" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <i class="fi fi-rr-search" style="color: #999;"></i>
+                        </div>
+                        <div class="result-info">
+                            <div class="result-name">${suggestion}</div>
+                        </div>
+                    `;
+                    
+                    suggestionItem.addEventListener('click', function() {
+                        searchInput.value = suggestion;
+                        performSearch(suggestion.toLowerCase());
+                    });
+                    
+                    searchResults.appendChild(suggestionItem);
+                });
+            }
+
+            
+            if (productResults.length > 0) {
+                const productHeader = document.createElement('div');
+                productHeader.innerHTML = '<h4 style="color: #666; font-size: 12px; text-transform: uppercase; margin: 15px 0 10px 0; padding: 0;">Sản phẩm</h4>';
+                searchResults.appendChild(productHeader);
+
+                productResults.forEach(product => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    resultItem.setAttribute('data-id', product.id);
+                    resultItem.innerHTML = `
+                        <div class="result-image">
+                            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'">
+                        </div>
+                        <div class="result-info">
+                            <div class="result-name">${product.name}</div>
+                            <div class="result-price">${product.price}</div>
+                        </div>
+                    `;
+                    resultItem.addEventListener('click', goToDetail);
+                    searchResults.appendChild(resultItem);
+                });
+            }
+        }
+
+        // Redirect to product page
+        // function redirectToProduct(product) {
+            
+        //     const slug = product.name
+        //         .toLowerCase()
+        //         .normalize('NFD')
+        //         .replace(/[\u0300-\u036f]/g, '') 
+        //         .replace(/[^a-z0-9\s]/g, '') 
+        //         .trim()
+        //         .replace(/\s+/g, '-'); 
+            
+        //     searchOverlay.classList.remove('active');
+        //     resetSearch();
+            
+        //     window.location.href = `detail_product.html?product=${slug}`;
+            
+        // }
+
+        function redirectToSearchResults(query) {
+            searchOverlay.classList.remove('active');
+            resetSearch();
+            
+            
+            window.location.href = `result_search.html?q=${encodeURIComponent(query)}`;
+        }
+
+        // Show suggestions
+        function showSuggestions() {
+            searchSuggestions.style.display = 'block';
+            searchResults.style.display = 'none';
+            noResults.style.display = 'none';
+            searchFooter.classList.remove('show');
+        }
+
+        // Reset search
+        function resetSearch() {
+            searchInput.value = '';
+            showSuggestions();
+        }
+
+        // Handle "View all results" button
+        // document.querySelector('.view-all-results').addEventListener('click', function() {
+        //     goToSearch();
+        // });
+        });
+    </script>
+</body>
+</html>

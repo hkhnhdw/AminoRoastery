@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Hàng - Amino Coffee</title>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            border-bottom: 1px solid black;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 80px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        /* Order Form Section */
+        .order-form {
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .edit-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #666;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .info-display {
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+        }
+
+        .customer-info {
+            margin-bottom: 8px;
+        }
+
+        .customer-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .customer-phone {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .customer-address {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .edit-button-shipping, .edit-button-address {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .edit-button-shipping:hover {
+            color: #8D7B68;
+        }
+
+        .edit-button-address:hover {
+            color: #8D7B68;
+        }
+
+        /* Shipping Method */
+        .shipping-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+        }
+
+        .shipping-price {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .payment-option:last-child {
+            border-bottom: none;
+        }
+
+        .payment-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .payment-radio {
+            margin-right: 12px;
+        }
+
+        .payment-text {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .payment-icon {
+            width: 30px;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 3px;
+        }
+
+        .visa { background-color: #1a1f71; }
+        .mastercard { background-color: #eb001b; }
+        .jcb { background-color: #006633; }
+        .online-banking { background-color: #0066cc; }
+
+        /* Order Summary */
+        .order-summary {
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .product-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #999;
+        }
+
+        .product-image img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .product-weight {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .product-quantity {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Coupon Section */
+        .coupon-section {
+            margin-bottom: 20px;
+        }
+
+        .coupon-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .coupon-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .coupon-btn {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .coupon-btn:hover {
+            background-color: #555;
+        }
+
+        /* Price Summary */
+        .price-summary {
+            margin-bottom: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .price-label {
+            color: #666;
+        }
+
+        .price-value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid #CCC;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Order Button */
+        .order-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .order-btn:hover {
+            background-color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .coupon-input-group {
+                flex-direction: column;
+            }
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        /* Popup Container */
+        .popup-container {
+            background-color: white;
+            padding: 0;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Popup Header */
+        .popup-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .popup-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .popup-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-close:hover {
+            color: #333;
+        }
+
+        /* Popup Content */
+        .popup-content {
+            padding: 25px;
+        }
+
+        .popup-form-group {
+            margin-bottom: 20px;
+        }
+
+        .popup-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .popup-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .popup-input:focus {
+            outline: none;
+            border-color: #8D7B68;
+        }
+
+        .popup-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Popup Actions */
+        .popup-actions {
+            padding: 20px 25px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .popup-btn {
+            padding: 12px 24px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .popup-btn-cancel {
+            background-color: #f5f5f5;
+            color: #666;
+        }
+
+        .popup-btn-cancel:hover {
+            background-color: #e8e8e8;
+        }
+
+        .popup-btn-save {
+            background-color: #333;
+            color: white;
+        }
+
+        .popup-btn-save:hover {
+            background-color: #555;
+        }
+
+        /* Shipping Method Popup */
+        .shipping-method-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .shipping-method-option:hover {
+            border-color: #8D7B68;
+            background-color: #f9f9f9;
+        }
+
+        .shipping-method-option.selected {
+            border-color: #8D7B68;
+            background-color: #f9f9f9;
+        }
+
+        .shipping-method-option input[type="radio"] {
+            margin-right: 12px;
+        }
+
+        .shipping-method-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .shipping-method-name {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .shipping-method-price {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .shipping-method-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #8D7B68;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        /* Location Dropdown Styles */
+        .location-dropdown-container {
+            position: relative;
+        }
+
+        .location-input {
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .location-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1001;
+            max-height: 400px;
+            overflow: hidden;
+        }
+
+        .location-dropdown.active {
+            display: block;
+        }
+
+        .location-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+
+        .location-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            background: #f8f8f8;
+        }
+
+        .location-tab.active {
+            color: #8D7B68;
+            border-bottom-color: #8D7B68;
+            background: white;
+        }
+
+        .location-search {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .location-search img {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .location-search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        .location-search-btn, .location-clear-btn {
+            padding: 8px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .location-clear-btn {
+            background: #f0f0f0;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .location-content {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .location-list {
+            display: none;
+        }
+
+        .location-list.active {
+            display: block;
+        }
+
+        .location-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .location-item:hover {
+            background-color: #f8f8f8;
+        }
+
+        .location-item.selected {
+            background-color: #f0f8ff;
+            color: #0066cc;
+            position: relative;
+        }
+
+        .location-item.selected::after {
+            content: '✓';
+            position: absolute;
+            right: 15px;
+            color: #0066cc;
+            font-weight: bold;
+        }
+
+        /* Custom scrollbar */
+        .location-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .location-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .location-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .popup-container {
+                width: 95%;
+                margin: 0 10px;
+            }
+
+            .popup-form-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .popup-actions {
+                flex-direction: column;
+            }
+
+            .popup-btn {
+                width: 100%;
+            }
+
+            .location-dropdown {
+                max-height: 300px;
+            }
+
+            .location-content {
+                max-height: 200px;
+            }
+        }
+
+        /* Success Popup Styles */
+        .success-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+        }
+
+        .success-popup-overlay.active {
+            display: flex;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .success-popup {
+            background-color: white;
+            padding: 40px 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+        }
+
+        .success-popup-overlay.active .success-popup {
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .success-icon::before {
+            content: '✓';
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .success-home-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .success-home-btn:hover {
+            background-color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .success-popup {
+                padding: 30px 20px;
+                margin: 0 20px;
+            }
+            
+            .success-icon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .success-icon::before {
+                font-size: 35px;
+            }
+            
+            .success-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="assets/images/logo-amino-ca-phe-rang-xay-vietnam.png" alt="">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Order Form -->
+        <div class="order-form">
+            <h1 class="page-title">ĐẶT HÀNG</h1>
+
+            <!-- Customer Info -->
+            <div class="form-section">
+                <div class="section-title">
+                    <span>Địa chỉ nhận hàng</span>
+                    <button class="edit-button-address">
+                        <span>
+                        <i class="fi fi-rc-pencil"></i>
+                        Thay đổi</span>
+                    </button>
+                </div>
+                
+                <div class="info-display">
+                    <div class="customer-name">Khánh Duy</div>
+                    <div class="customer-phone">(+84) 123456789</div>
+                    <div class="customer-address">123 Vũ Tông Phan, Phường Thanh Xuân Trung, Quận Thanh Xuân, Hà Nội</div>
+                </div>
+            </div>
+
+            <!-- Shipping Method -->
+            <div class="form-section">
+                <div class="section-title">
+                    <span>Phương thức vận chuyển</span>
+                    <button class="edit-button-shipping">
+                        <span>
+                            <i class="fi fi-rc-pencil"></i>
+                            Thay đổi</span>
+                    </button>
+                </div>
+                
+                <div class="shipping-option">
+                    <span>Giao hàng tiêu chuẩn</span>
+                    <span class="shipping-price">22.000đ</span>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="form-section">
+                <div class="section-title">Phương thức thanh toán</div>
+                
+                <div class="payment-methods">
+                    <div class="payment-option">
+                        <input type="radio" name="payment" class="payment-radio" checked>
+                        <span class="payment-text">Thanh toán qua Visa/Credit Card/ATM</span>
+                        <div class="payment-icons">
+                            <img src="assets/icon/master.CzeoQWmc.svg" alt="">
+                            <img src="assets/icon/visa.sxIq5Dot.svg" alt="">
+                            <img src="assets/icon/jcb.BgZHqF0u.svg" alt="">
+                        </div>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <input type="radio" name="payment" class="payment-radio">
+                        <span class="payment-text">Thanh toán qua Online Banking</span>
+                        <div class="payment-icons">
+                            <img src="assets/icon/zalopay.B7Gpklk4.svg" alt="">
+                        </div>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <input type="radio" name="payment" class="payment-radio">
+                        <span class="payment-text">Thanh toán trực tiếp khi nhận hàng (COD)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2 class="summary-title">Sản phẩm</h2>
+            
+            <div class="product-item">
+                <div class="product-image">
+                    <img src="assets/images/Ca-Phe-Hat-Pha-May-cau-dat-300x300.jpg" alt="">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Cà phê hạt pha máy cầu đất</div>
+                    <div class="product-weight">250gr</div>
+                    <div class="product-quantity">x 1</div>
+                </div>
+                <div class="product-price">200.000đ</div>
+            </div>
+
+            <div class="coupon-section">
+                <div class="coupon-input-group">
+                    <input type="text" class="coupon-input" placeholder="Mã giảm giá">
+                    <button class="coupon-btn">Áp dụng</button>
+                </div>
+            </div>
+
+            <div class="price-summary">
+                <div class="price-row">
+                    <span class="price-label">Tổng tiền hàng:</span>
+                    <span class="price-value">200.000đ</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Vận chuyển:</span>
+                    <span class="price-value">22.000đ</span>
+                </div>
+                <div class="total-row">
+                    <span>Tổng:</span>
+                    <span>222.000đ</span>
+                </div>
+            </div>
+
+            <button class="order-btn">Đặt hàng</button>
+        </div>
+    </div>
+    <div class="popup-overlay" id="addressPopup">
+        <div class="popup-container">
+            <div class="popup-header">
+                <h3 class="popup-title">CHỈNH SỬA ĐỊA CHỈ NHẬN HÀNG</h3>
+                <button class="popup-close" onclick="closeAddressPopup()">&times;</button>
+            </div>
+            <div class="popup-content">
+                <div class="popup-form-row">
+                    <div class="popup-form-group">
+                        <label>Họ</label>
+                        <input type="text" class="popup-input" id="firstName" placeholder="Khánh">
+                    </div>
+                    <div class="popup-form-group">
+                        <label>Tên</label>
+                        <input type="text" class="popup-input" id="lastName" placeholder="Duy">
+                    </div>
+                </div>
+                <div class="popup-form-group">
+                    <label>Tỉnh/Thành phố, Quận/Huyện, Phường/Xã</label>
+                    <div class="location-dropdown-container">
+                        <input type="text" class="popup-input location-input" id="locationInput" placeholder="Hà Nội, Quận Thanh Xuân, Phường Nhân Chính" readonly onclick="toggleLocationDropdown()">
+                        <div class="location-dropdown" id="locationDropdown">
+                            <div class="location-tabs">
+                                <div class="location-tab active" data-tab="province">Tỉnh/Thành phố</div>
+                                <div class="location-tab" data-tab="district">Quận/Huyện</div>
+                                <div class="location-tab" data-tab="ward">Phường/ Xã</div>
+                            </div>
+                            <div class="location-search">
+                                <input type="text" class="location-search-input" placeholder="Hà Nội, Quận Thanh Xuân, Phường Nhân Chính">
+                                <button class="location-search-btn">
+                                    <img src="assets/icon/search.svg" alt="">
+                                </button>
+                                <button class="location-clear-btn">✕</button>
+                            </div>
+                            <div class="location-content">
+                                <div class="location-list active" id="provinceList">
+                                    <div class="location-item" data-value="An Giang">An Giang</div>
+                                    <div class="location-item" data-value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</div>
+                                    <div class="location-item" data-value="Bình Dương">Bình Dương</div>
+                                    <div class="location-item" data-value="Bình Phước">Bình Phước</div>
+                                    <div class="location-item" data-value="Bình Thuận">Bình Thuận</div>
+                                    <div class="location-item" data-value="Bình Định">Bình Định</div>
+                                    <div class="location-item selected" data-value="Hà Nội">Hà Nội</div>
+                                    <div class="location-item" data-value="Hải Phòng">Hải Phòng</div>
+                                    <div class="location-item" data-value="Hồ Chí Minh">Hồ Chí Minh</div>
+                                </div>
+                                <div class="location-list" id="districtList">
+                                    <div class="location-item" data-value="Quận Ba Đình">Quận Ba Đình</div>
+                                    <div class="location-item" data-value="Quận Hoàn Kiếm">Quận Hoàn Kiếm</div>
+                                    <div class="location-item" data-value="Quận Tây Hồ">Quận Tây Hồ</div>
+                                    <div class="location-item selected" data-value="Quận Thanh Xuân">Quận Thanh Xuân</div>
+                                    <div class="location-item" data-value="Quận Đống Đa">Quận Đống Đa</div>
+                                    <div class="location-item" data-value="Quận Hai Bà Trưng">Quận Hai Bà Trưng</div>
+                                </div>
+                                <div class="location-list" id="wardList">
+                                    <div class="location-item" data-value="Phường Hạ Đình">Phường Hạ Đình</div>
+                                    <div class="location-item" data-value="Phường Khương Đình">Phường Khương Đình</div>
+                                    <div class="location-item" data-value="Phường Khương Mai">Phường Khương Mai</div>
+                                    <div class="location-item" data-value="Phường Khương Trung">Phường Khương Trung</div>
+                                    <div class="location-item selected" data-value="Phường Nhân Chính">Phường Nhân Chính</div>
+                                    <div class="location-item" data-value="Phường Thanh Xuân Bắc">Phường Thanh Xuân Bắc</div>
+                                    <div class="location-item" data-value="Phường Thanh Xuân Nam">Phường Thanh Xuân Nam</div>
+                                    <div class="location-item" data-value="Phường Thanh Xuân Trung">Phường Thanh Xuân Trung</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-form-group">
+                    <label>Địa chỉ cụ thể</label>
+                    <input type="text" class="popup-input" id="specificAddress" placeholder="123 Vũ Tông Phan">
+                </div>
+            </div>
+            <div class="popup-actions">
+                <button class="popup-btn popup-btn-cancel" onclick="closeAddressPopup()">Hủy bỏ</button>
+                <button class="popup-btn popup-btn-save" onclick="saveAddress()">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shipping Method Popup -->
+    <div class="popup-overlay" id="shippingPopup">
+        <div class="popup-container">
+            <div class="popup-header">
+                <h3 class="popup-title">CHỌN PHƯƠNG THỨC VẬN CHUYỂN</h3>
+                <button class="popup-close" onclick="closeShippingPopup()">&times;</button>
+            </div>
+            <div class="popup-content">
+                <div class="shipping-method-option selected" onclick="selectShippingMethod(this, 'standard', '22.000đ')">
+                    <div class="shipping-method-left">
+                        <input type="radio" name="shippingMethod" value="standard" checked>
+                        <span class="shipping-method-name">Giao hàng tiêu chuẩn</span>
+                    </div>
+                    <div class="shipping-method-price">22.000đ</div>
+                </div>
+                <div class="shipping-method-option" onclick="selectShippingMethod(this, 'express', '40.000đ')">
+                    <div class="shipping-method-left">
+                        <input type="radio" name="shippingMethod" value="express">
+                        <span class="shipping-method-name">Giao hàng hỏa tốc</span>
+                    </div>
+                    <div class="shipping-method-price">40.000đ</div>
+                </div>
+            </div>
+            <div class="popup-actions">
+                <button class="popup-btn popup-btn-cancel" onclick="closeShippingPopup()">Hủy bỏ</button>
+                <button class="popup-btn popup-btn-save" onclick="saveShippingMethod()">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="success-popup-overlay" id="successPopup">
+        <div class="success-popup">
+            <div class="success-icon"></div>
+                <h2 class="success-title">Đặt hàng thành công</h2>
+                <button class="success-home-btn" onclick="goToHomePage()">Về trang chủ</button>
+        </div>
+    </div>
+
+    <script>
+        // Current selected shipping method
+        let selectedShippingMethod = {
+            type: 'standard',
+            name: 'Giao hàng tiêu chuẩn',
+            price: '22.000đ'
+        };
+
+        // Location selection state
+        let selectedLocation = {
+            province: 'Hà Nội',
+            district: 'Quận Thanh Xuân',
+            ward: 'Phường Nhân Chính'
+        };
+
+        // Location Dropdown Functions
+        function toggleLocationDropdown() {
+            const dropdown = document.getElementById('locationDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        function switchLocationTab(tabName) {
+            // Switch tab appearance
+            document.querySelectorAll('.location-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // Switch content
+            document.querySelectorAll('.location-list').forEach(list => {
+                list.classList.remove('active');
+            });
+            document.getElementById(tabName + 'List').classList.add('active');
+        }
+
+        function selectLocationItem(element, type, value) {
+            // Remove selected from all items in current list
+            element.parentElement.querySelectorAll('.location-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Add selected to clicked item
+            element.classList.add('selected');
+
+            // Update selected location
+            selectedLocation[type] = value;
+
+            // Update input display
+            const locationInput = document.getElementById('locationInput');
+            locationInput.value = `${selectedLocation.province}, ${selectedLocation.district}, ${selectedLocation.ward}`;
+
+            // Auto switch to next tab
+            if (type === 'province') {
+                setTimeout(() => switchLocationTab('district'), 300);
+            } else if (type === 'district') {
+                setTimeout(() => switchLocationTab('ward'), 300);
+            } else if (type === 'ward') {
+                // Close dropdown after selecting ward
+                setTimeout(() => {
+                    document.getElementById('locationDropdown').classList.remove('active');
+                }, 500);
+            }
+        }
+
+        // Address Popup Functions
+        function openAddressPopup() {
+            // Pre-fill current values
+            document.getElementById('firstName').value = 'Khánh';
+            document.getElementById('lastName').value = 'Duy';
+            document.getElementById('locationInput').value = `${selectedLocation.province}, ${selectedLocation.district}, ${selectedLocation.ward}`;
+            document.getElementById('specificAddress').value = '123 Vũ Tông Phan';
+            
+            document.getElementById('addressPopup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAddressPopup() {
+            document.getElementById('addressPopup').classList.remove('active');
+            document.getElementById('locationDropdown').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveAddress() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const specificAddress = document.getElementById('specificAddress').value;
+
+            // Update the display
+            document.querySelector('.customer-name').textContent = `${firstName} ${lastName}`;
+            document.querySelector('.customer-address').textContent = `${specificAddress}, ${selectedLocation.ward}, ${selectedLocation.district}, ${selectedLocation.province}`;
+
+            closeAddressPopup();
+        }
+
+        // Shipping Popup Functions
+        function openShippingPopup() {
+            document.getElementById('shippingPopup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeShippingPopup() {
+            document.getElementById('shippingPopup').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function selectShippingMethod(element, type, price) {
+            // Remove selected class from all options
+            document.querySelectorAll('.shipping-method-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            element.classList.add('selected');
+
+            // Update radio button
+            element.querySelector('input[type="radio"]').checked = true;
+
+            // Store selected method
+            selectedShippingMethod = {
+                type: type,
+                name: element.querySelector('.shipping-method-name').textContent,
+                price: price
+            };
+        }
+
+        function saveShippingMethod() {
+            // Update the display
+            document.querySelector('.shipping-option span:first-child').textContent = selectedShippingMethod.name;
+            document.querySelector('.shipping-price').textContent = selectedShippingMethod.price;
+
+            // Update price summary
+            const shippingPriceElement = document.querySelector('.price-summary .price-row:nth-child(2) .price-value');
+            shippingPriceElement.textContent = selectedShippingMethod.price;
+
+            // Update total
+            const productPrice = 200000;
+            const shippingPrice = parseInt(selectedShippingMethod.price.replace(/[^\d]/g, ''));
+            const total = productPrice + shippingPrice;
+            document.querySelector('.total-row span:last-child').textContent = total.toLocaleString('vi-VN') + 'đ';
+
+            closeShippingPopup();
+        }
+
+        // Add event listeners to edit buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const addressEditBtn = document.querySelector('.edit-button-address');
+            if (addressEditBtn) {
+                addressEditBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openAddressPopup();
+                });
+            }
+
+            const shippingEditBtn = document.querySelector('.edit-button-shipping');
+            if (shippingEditBtn) {
+                shippingEditBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openShippingPopup();
+                });
+            }
+
+            // Location tab clicks
+            document.querySelectorAll('.location-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    switchLocationTab(this.dataset.tab);
+                });
+            });
+
+            // Location item clicks
+            document.querySelectorAll('#provinceList .location-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    selectLocationItem(this, 'province', this.dataset.value);
+                });
+            });
+
+            document.querySelectorAll('#districtList .location-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    selectLocationItem(this, 'district', this.dataset.value);
+                });
+            });
+
+            document.querySelectorAll('#wardList .location-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    selectLocationItem(this, 'ward', this.dataset.value);
+                });
+            });
+
+            // Close popup when clicking outside
+            document.querySelectorAll('.popup-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) {
+                        overlay.classList.remove('active');
+                        document.getElementById('locationDropdown').classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Close location dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.location-dropdown-container')) {
+                    document.getElementById('locationDropdown').classList.remove('active');
+                }
+            });
+
+            // Order button click handler
+            const orderBtn = document.querySelector('.order-btn');
+            if (orderBtn) {
+                orderBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showSuccessPopup();
+                });
+            }
+        });
+
+        // Prevent form submission on Enter key in popup inputs
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.classList.contains('popup-input')) {
+                e.preventDefault();
+            }
+        });
+
+        // Success popup functions
+        function showSuccessPopup() {
+            const successPopup = document.getElementById('successPopup');
+            successPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Auto close after 3 seconds and redirect to home page
+            setTimeout(() => {
+                goToHomePage();
+            }, 3000);
+        }
+
+        function goToHomePage() {
+            window.location.href = 'main.html';
+        }
+    </script>
+</body>
+</html>
