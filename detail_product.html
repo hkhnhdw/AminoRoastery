@@ -614,7 +614,7 @@
 
                 <div class="action-buttons">
                     <button class="btn btn-primary">Thêm vào giỏ hàng</button>
-                    <button class="btn btn-secondary">Mua ngay</button>
+                    <button class="btn btn-secondary" onclick="goToOrder()">Mua ngay</button>
                 </div>
             </div>
         </div>
@@ -759,5 +759,12 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        function goToOrder() {
+            window.location.href = "order.html";
+        }
+        
+    </script>
 </body>
 </html>
